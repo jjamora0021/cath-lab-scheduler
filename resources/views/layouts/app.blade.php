@@ -18,6 +18,9 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-select.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
         @yield('page-css')
 
         <!-- Favicon -->
@@ -71,11 +74,15 @@
 
         <!-- Scripts -->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('js/moment.min.js') }}"></script>
         <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/custom-request-schedule-js.js') }}"></script>
         @yield('page-script')
     </body>
 </html>

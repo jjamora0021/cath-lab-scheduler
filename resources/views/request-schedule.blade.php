@@ -11,6 +11,19 @@
     <div class="row">
 
         <div class="col-lg-8 offset-lg-2">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>    
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+
+            @if ($message = Session::get('failed'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>    
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
 
             <div class="card shadow mb-4">
 
@@ -67,7 +80,7 @@
                                     <div class="col-lg-2">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="weight">Weight in kg<span class="small text-danger"> *</span></label>
-                                            <input type="number" id="weight" class="form-control" name="weight" placeholder="0" min="0" required="true">
+                                            <input type="text" id="weight" class="form-control" name="weight" placeholder="0" required="true">
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
@@ -98,7 +111,7 @@
                                             <div class="form-group focused">
                                                 <label class="form-control-label" for="allergies">Allergies</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Add Patient Allergy" id="allergies" name="allergies">
+                                                    <input type="text" class="form-control" placeholder="Add Patient Allergy" id="allergies">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary" type="button" onclick="requestScheduleFunctions.addAllergies();">Add Allergies</button>
                                                     </div>
@@ -138,16 +151,13 @@
                                             <input type="text" id="operation" class="form-control" name="operation" placeholder="Operation" required="true">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-4">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="date">Date<span class="small text-danger"> *</span></label>
-                                            <input type="text" id="date" class="form-control" name="date" placeholder="{{ $current_date }}" required="true">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="time">Time<span class="small text-danger"> *</span></label>
-                                            <input type="text" id="time" class="form-control" name="time" placeholder="08:00 AM" required="true">
+                                            <label class="form-control-label" for="urgency">Urgency<span class="small text-danger"> *</span></label>
+                                            <select class="form-control selectpicker" id="urgency" required="true" name="urgency" data-style="btn-primary" title="Select Urgency">
+                                                <option value="elective">Elective</option>
+                                                <option value="emergency">Emergency</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -165,14 +175,16 @@
                                             <input type="text" id="surgeon" class="form-control" name="surgeon" placeholder="Surgeon" required="true">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                     <div class="col-lg-2">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="urgency">Urgency<span class="small text-danger"> *</span></label>
-                                            <select class="form-control" id="urgency" required="true">
-                                                <option>Select Urgency</option>
-                                                <option>Elective</option>
-                                                <option>Emergency</option>
-                                            </select>
+                                            <label class="form-control-label" for="date">Date<span class="small text-danger"> *</span></label>
+                                            <input type="text" id="date" class="form-control" name="date" placeholder="{{ $current_date }}" required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="time">Time<span class="small text-danger"> *</span></label>
+                                            <input type="text" id="time" class="form-control" name="time" placeholder="08:00 AM" required="true">
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +197,7 @@
                         <div class="pl-lg-4 pt-3 pb-3">
                             <div class="row">
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button id="save-schedule" type="submit" class="btn btn-success" disabled>Save</button>
                                 </div>
                             </div>
                         </div>
@@ -198,15 +210,20 @@
         </div>
 
     </div>
+
+    @include('includes.schedule-validator-modal')
 @endsection
 
 @section('page-script')
     <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/custom-date-time-picker-js.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/custom-request-schedule-js.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {
             dateTimePickerFunctions.onLoad();
+            $('.selectpicker').selectpicker();
+            $('#time').datetimepicker().on("dp.change",function() {
+                requestScheduleFunctions.checkSchedule($('#date').val(), $('#time').val());
+            });
         });
     </script>
 @endsection

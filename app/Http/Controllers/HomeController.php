@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 
 use Auth;
 use Session;
+use Config;
 
 class HomeController extends Controller
 {
+    protected $CalendarController;
+
     /**
      * Create a new controller instance.
      *
@@ -18,6 +21,9 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->CalendarController = new CalendarController();
+
     }
 
     /**
@@ -33,6 +39,8 @@ class HomeController extends Controller
             'users' => $users
         ];
 
-        return view('home', compact('widget'));
+        $schedules = $this->CalendarController->fetchSchedules();
+        
+        return view('home', compact('widget','schedules'));
     }
 }

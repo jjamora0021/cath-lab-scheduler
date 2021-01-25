@@ -45,5 +45,34 @@ requestScheduleFunctions = {
 	deleteAllergy: function(allergy_count)
 	{
 		$('ul#allergies #li-allergy-'+allergy_count).remove();
-	}
+	},
+
+	/**
+	 * [checkSchedule description]
+	 * @param  {[type]} date [description]
+	 * @param  {[type]} time [description]
+	 * @return {[type]}      [description]
+	 */
+	checkSchedule: function(date, time)
+	{
+		$.ajax({
+			url: window.location.origin + '/check-schedule',
+			type: 'GET',
+			data: {
+				date: date,
+				time: time
+			},
+			success: function(response) {
+				if(response != 0)
+				{
+					$('#schedule-validator-modal').modal();
+					$('#save-schedule').attr('disabled',true);
+				}
+				else
+				{
+					$('#save-schedule').attr('disabled',false);
+				}
+			}
+		});
+	},
 }

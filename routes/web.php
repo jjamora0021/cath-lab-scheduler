@@ -31,4 +31,4 @@ Route::get('/calendar', 'CalendarController@index')->name('calendar');
 
 Route::get('/request-schedule', 'CalendarController@request')->name('request-schedule');
 Route::post('/create-request-schedule', 'CalendarController@createRequestSchedule')->name('create-request-schedule');
-
+Route::get('/check-schedule', 'CalendarController@checkSchedule')->name('check-schedule');
