@@ -1,0 +1,1 @@
+// $.addEvetListener('DOMContentLoaded', f)
