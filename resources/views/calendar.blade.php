@@ -30,7 +30,10 @@
 
 @section('page-script')
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/custom-calendar-js.js') }}">
-        
+    <script type="text/javascript" src="{{ asset('js/custom-calendar-js.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            schedulesFunctions.onLoad();    
+        });
     </script>
 @endsection
