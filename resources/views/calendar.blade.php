@@ -2,6 +2,7 @@
 
 @section('page-css')
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom-calendar-css.css') }}">
 @endsection
 
 @section('main-content')

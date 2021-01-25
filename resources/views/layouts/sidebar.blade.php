@@ -23,6 +23,13 @@
             <i class="fas fa-calendar-alt"></i>
             <span>{{ __('Calendar') }}</span></a>
     </li>
+    <!-- Nav Item - Request -->
+
+    <li class="nav-item {{ Nav::isRoute('request-schedule') }}">
+        <a class="nav-link" href="{{ route('request-schedule') }}">
+            <i class="far fa-calendar-plus"></i>
+            <span>{{ __('Request Schedule') }}</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">

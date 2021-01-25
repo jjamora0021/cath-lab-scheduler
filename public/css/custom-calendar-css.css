@@ -1,0 +1,11 @@
+/**
+ * Custom CSS for Calendar
+ */
+
+.fc-today-button, 
+.fc-dayGridMonth-button, 
+.fc-timeGridWeek-button, 
+.fc-timeGridDay-button, 
+.fc-listMonth-button {
+	text-transform: uppercase !important;
+}
