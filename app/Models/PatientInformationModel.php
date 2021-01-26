@@ -69,13 +69,15 @@ class PatientInformationModel extends Model
      * @param  [type] $approval [description]
      * @return [type]           [description]
      */
-    public function updateScheduleInfo($id, $approval, $user_data)
+    public function updateScheduleInfo($id, $approval, $date, $time, $user_data)
     {
     	$approver = $user_data->first_name . ' ' . $user_data->last_name;
     	$data = array(
     		'status' => $approval,
     		'approved_by' => $approver,
-    		'date_approved' => Carbon::now()
+    		'date_approved' => Carbon::now(),
+    		'date' => $date,
+    		'time' => $time
     	);
     	$result = DB::table('patient_info')
     				->where('id',$id)

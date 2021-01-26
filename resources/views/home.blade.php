@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page-css')
-
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
 @endsection
 
 @section('main-content')
@@ -43,7 +43,7 @@
                                 <th>Urgency</th>
                                 <th>Status</th>
                                 <th>Approved By</th>
-                                <th>Date Approved</th>
+                                <th>Date | Time Approved</th>
                                 <th></th>
                             </thead>
                             @if(empty($schedules))
@@ -59,7 +59,7 @@
                                             <td class="text-capitalize">{{ $value->urgency }}</td>
                                             <td class="text-capitalize">{{ $value->status }}</td>
                                             <td>{{ $value->approved_by != NULL ? $value->approved_by : '' }}</td>
-                                            <td>{{ $value->date_approved != NULL ? \Carbon\Carbon::parse($value->date_approved)->format('F d,Y') : '' }}</td>
+                                            <td>{{ $value->date_approved }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary" onclick="requestScheduleFunctions.fetchSchedule({{ $value->id }});">Review</button>
                                             </td>
@@ -178,6 +178,18 @@
                                     <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2"></h4></label>
                                 </div>
                             </div>
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label" for="date">Date<span class="small text-danger"> *</span></label>
+                                    <input type="text" id="date" class="form-control" name="date" placeholder="" required="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label" for="time">Time<span class="small text-danger"> *</span></label>
+                                    <input type="text" id="time" class="form-control" name="time" placeholder="08:00 AM" required="true">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -200,8 +212,17 @@
 
 @section('page-script')
     <script type="text/javascript" src="{{ asset('js/custom-request-schedule-js.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/custom-date-time-picker-js.js') }}"></script>
     <script type="text/javascript">
-        $('table').DataTable();
+        $(document).ready(function($) {
+            $('table').DataTable();
+            dateTimePickerFunctions.onLoad();
+            $('.selectpicker').selectpicker();
+            $('#time').datetimepicker().on("dp.change",function() {
+                requestScheduleFunctions.checkSchedule($('#date').val(), $('#time').val());
+            });
+        });
     </script>
 @endsection
 

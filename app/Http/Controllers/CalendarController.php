@@ -80,6 +80,7 @@ class CalendarController extends Controller
 	    		'operation' => $request['operation'],
 	    		'anesthesiologist' => $request['anesthesiologist'],
 	    		'surgeon' => $request['surgeon'],
+                'urgency' => $request['urgency'],
 	    		'date' => $date,
 	    		'time' => $time,
 	    		'created_at' => $now,
@@ -148,7 +149,10 @@ class CalendarController extends Controller
         $user_data = Auth::user();
         $id = $request['id'];
         $approval = $request['approval'];
-        $result = $this->PatientInformationModel->updateScheduleInfo($id, $approval, $user_data);
+        $date = date('Y-m-d', strtotime($request['date']));
+        $time = Carbon::parse($request['time'])->format('H:i:s');
+
+        $result = $this->PatientInformationModel->updateScheduleInfo($id, $approval, $date, $time, $user_data);
 
         return $result;
     }

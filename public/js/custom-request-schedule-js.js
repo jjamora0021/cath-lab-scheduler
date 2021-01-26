@@ -93,62 +93,55 @@ requestScheduleFunctions = {
 				var data = response[0];
 
 				var ptx_name = data.first_name + ' ' + data.middle_name + ' ' + data.last_name;
-				$('#schedule-info-modal #patient_name').text('');
-				$('#schedule-info-modal #patient_name').append(ptx_name);
+				$('#schedule-info-modal #patient_name').empty().append(ptx_name);
 
 				var age = data.age;
-				$('#schedule-info-modal #age').text('');
-				$('#schedule-info-modal #age').append(age);
+				$('#schedule-info-modal #age').empty().append(age);
 
 				var pt_ptt = data.pt_ptt;
-				$('#schedule-info-modal #pt_ptt').text('');
-				$('#schedule-info-modal #pt_ptt').append(pt_ptt);
+				$('#schedule-info-modal #pt_ptt').empty().append(pt_ptt);
 
 				var weight = data.weight;
-				$('#schedule-info-modal #weight').text('');
-				$('#schedule-info-modal #weight').append(weight);
+				$('#schedule-info-modal #weight').empty().append(weight);
 
 				var height = data.height;
-				$('#schedule-info-modal #height').text('');
-				$('#schedule-info-modal #height').append(height);
+				$('#schedule-info-modal #height').empty().append(height);
 
-				$('#schedule-info-modal #allergies-list').text('');
+				$('#schedule-info-modal #allergies-list').empty();
 				$.each(JSON.parse(data.allergies), function(index, el) {
 					var list = '<li class="list-group-item">'+el+'</li>';
 					$('#schedule-info-modal #allergies-list').append(list);
 				});
 
 				var room_number = data.room_number;
-				$('#schedule-info-modal #room_number').text('');
-				$('#schedule-info-modal #room_number').append(room_number);
+				$('#schedule-info-modal #room_number').empty().append(room_number);
 
 				var bed_number = data.bed_number;
-				$('#schedule-info-modal #bed_number').text('');
-				$('#schedule-info-modal #bed_number').append(bed_number);
+				$('#schedule-info-modal #bed_number').empty().append(bed_number);
 				
 				var diagnosis = data.diagnosis;
-				$('#schedule-info-modal #diagnosis').text('');
-				$('#schedule-info-modal #diagnosis').append(diagnosis);
+				$('#schedule-info-modal #diagnosis').empty().append(diagnosis);
 				
 				var operation = data.operation;
-				$('#schedule-info-modal #operation').text('');
-				$('#schedule-info-modal #operation').append(operation);
+				$('#schedule-info-modal #operation').empty().append(operation);
 
 				var surgeon = data.surgeon;
-				$('#schedule-info-modal #surgeon').text('');
-				$('#schedule-info-modal #surgeon').append(surgeon);
+				$('#schedule-info-modal #surgeon').empty().append(surgeon);
 
 				var anesthesiologist = data.anesthesiologist;
-				$('#schedule-info-modal #anesthesiologist').text('');
-				$('#schedule-info-modal #anesthesiologist').append(anesthesiologist);
+				$('#schedule-info-modal #anesthesiologist').empty().append(anesthesiologist);
 
 				var urgency = data.urgency;
-				$('#schedule-info-modal #urgency').text('');
-				$('#schedule-info-modal #urgency').append(urgency);
+				$('#schedule-info-modal #urgency').empty().append(urgency);
 
 				var status = data.status;
-				$('#schedule-info-modal #status').text('');
-				$('#schedule-info-modal #status').append(status);
+				$('#schedule-info-modal #status').empty().append(status);
+
+				var date = data.date.split('-');
+				$('#schedule-info-modal #date').empty().val(date[1]+"/"+date[2]+"/"+date[0]).datetimepicker();
+
+				var time = data.time;
+				$('#schedule-info-modal #time').empty().val(time).datetimepicker({format: 'LT'});
 
 				$('#btn-approve').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "approved")');
 				$('#btn-decline').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "decline")')
@@ -175,7 +168,9 @@ requestScheduleFunctions = {
 			type: 'PUT',
 			data: {
 				id: patien_info_id,
-				approval: approval
+				approval: approval,
+				date: $('#schedule-info-modal #date').val(),
+				time: $('#schedule-info-modal #time').val(),
 			},
 			success: function(response) {
 				if(response == 1)

@@ -175,7 +175,7 @@
                                             <input type="text" id="surgeon" class="form-control" name="surgeon" placeholder="Surgeon" required="true">
                                         </div>
                                     </div>
-                                     <div class="col-lg-2">
+                                    <div class="col-lg-2">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="date">Date<span class="small text-danger"> *</span></label>
                                             <input type="text" id="date" class="form-control" name="date" placeholder="{{ $current_date }}" required="true">
