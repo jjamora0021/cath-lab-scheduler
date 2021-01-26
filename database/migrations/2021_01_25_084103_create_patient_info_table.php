@@ -34,7 +34,7 @@ class CreatePatientInfoTable extends Migration
             $table->enum('urgency', ['elective', 'emergency']);
             $table->enum('status', ['pending', 'approved', 'decline'])->default('pending');
             $table->string('approved_by')->nullable();
-            $table->date('date_approved')->nullable();
+            $table->timestamp('date_approved')->nullable();
             $table->timestamps();
         });
     }

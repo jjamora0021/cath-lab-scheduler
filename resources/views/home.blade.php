@@ -175,7 +175,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group focused">
-                                    <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2 text-{{ config('status.bg')[$value->status] }} font-weight-bold"></h4></label>
+                                    <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2"></h4></label>
                                 </div>
                             </div>
                         </div>
@@ -184,8 +184,8 @@
                 <div class="modal-footer d-block">
                     <div class="row">
                         <div class="col-lg-6">
-                            <button type="button" class="btn btn-success" onclick="requestScheduleFunctions.updateSchedule({{ $value->id }}, '{{ $value->status }}', 'approved');">Approve</button>
-                            <button type="button" class="btn btn-danger" onclick="requestScheduleFunctions.updateSchedule({{ $value->id }}, '{{ $value->status }}', 'decline');">Decline</button>
+                            <button type="button" class="btn btn-success" id="btn-approve">Approve</button>
+                            <button type="button" class="btn btn-danger" id="btn-decline">Decline</button>
                         </div>
                         <div class="col-lg-6 text-right">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-btn">Close</button>

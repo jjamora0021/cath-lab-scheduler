@@ -149,6 +149,9 @@ requestScheduleFunctions = {
 				var status = data.status;
 				$('#schedule-info-modal #status').text('');
 				$('#schedule-info-modal #status').append(status);
+
+				$('#btn-approve').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "approved")');
+				$('#btn-decline').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "decline")')
 			}
 		})
 		.done(function() {
@@ -162,7 +165,7 @@ requestScheduleFunctions = {
 	 * @param  {[type]} approval       [description]
 	 * @return {[type]}                [description]
 	 */
-	updateSchedule: function(patien_info_id, status, approval)
+	updateSchedule: function(patien_info_id, approval)
 	{
 		$.ajax({
 			headers: {
@@ -175,15 +178,9 @@ requestScheduleFunctions = {
 				approval: approval
 			},
 			success: function(response) {
-				var options = {
-					decline : 'danger',
-					pending : 'warning',
-					approved : 'success'
-				};
 				if(response == 1)
 				{
-					$('#schedule-info-modal #status').text('');
-					$('#schedule-info-modal #status').removeClass('text-' + options[status]).addClass('text-' + options[approval]).append(approval);
+					$('#schedule-info-modal #status').text('').append(approval);
 
 					$('#alert-success').toggleClass('d-none');
 					$('#alert-success span#changed-status').empty().append(approval);
