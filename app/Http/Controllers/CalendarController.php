@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use Carbon\Carbon;
-use Session;
 
 use App\Models\PatientInformationModel;
 use App\Models\OperationInformationModel;
@@ -135,7 +134,22 @@ class CalendarController extends Controller
     {
         $id = $request['id'];
         $result = $this->PatientInformationModel->fetchScheduleInfo($id);
-        
+
+        return $result;
+    }
+
+    /**
+     * [updateScheduleInfo description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function updateScheduleInfo(Request $request)
+    {
+        $user_data = Auth::user();
+        $id = $request['id'];
+        $approval = $request['approval'];
+        $result = $this->PatientInformationModel->updateScheduleInfo($id, $approval, $user_data);
+
         return $result;
     }
 }

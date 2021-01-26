@@ -51,15 +51,15 @@
                             @else
                                 <tbody>
                                     @foreach($schedules as $key => $value)
-                                        <tr class="{{ config('status.bg')[$value->status] }} font-weight-bold">
+                                        <tr class="text-{{ config('status.bg')[$value->status] }} font-weight-bold">
                                             <td>{{ $value->first_name }} {{ $value->middle_name }} {{ $value->last_name }}</td>
                                             <td>{{ $value->operation }}</td>
                                             <td>{{ \Carbon\Carbon::parse($value->date)->format('F d, Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($value->time)->format('h:i A') }}</td>
-                                            <td class="text-uppercase">{{ $value->urgency }}</td>
-                                            <td>Pending</td>
-                                            <td>King Luna</td>
-                                            <td>{{ \Carbon\Carbon::parse($value->date)->format('F d,Y') }}</td>
+                                            <td class="text-capitalize">{{ $value->urgency }}</td>
+                                            <td class="text-capitalize">{{ $value->status }}</td>
+                                            <td>{{ $value->approved_by != NULL ? $value->approved_by : '' }}</td>
+                                            <td>{{ $value->date_approved != NULL ? \Carbon\Carbon::parse($value->date_approved)->format('F d,Y') : '' }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary" onclick="requestScheduleFunctions.fetchSchedule({{ $value->id }});">Review</button>
                                             </td>
@@ -75,7 +75,7 @@
     </div>
 
     {{-- Modal --}}
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="schedule-info-modal">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true" id="schedule-info-modal">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,6 +86,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <div class="alert alert-success d-none" role="alert" id="alert-success">
+                            Schedule has been Successfully <span class="text-uppercase" id="changed-status"></span>
+                        </div>
+                        <div class="alert alert-danger d-none" role="alert" id="alert-danger">
+                            Something went wrong. Please try again.
+                        </div>
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group focused">
@@ -168,15 +175,22 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group focused">
-                                    <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2 text-warning"></h4></label>
+                                    <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2 text-{{ config('status.bg')[$value->status] }} font-weight-bold"></h4></label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-success" onclick="requestScheduleFunctions.updateSchedule({{ $value->id }}, '{{ $value->status }}', 'approved');">Approve</button>
+                            <button type="button" class="btn btn-danger" onclick="requestScheduleFunctions.updateSchedule({{ $value->id }}, '{{ $value->status }}', 'decline');">Decline</button>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-btn">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use DB;
+use Carbon\Carbon;
 
 class PatientInformationModel extends Model
 {
@@ -58,7 +59,28 @@ class PatientInformationModel extends Model
     public function fetchScheduleInfo($id)
     {
     	$data = (DB::table('patient_info')->where('id',$id)->get())->toArray();
-    	
+
     	return $data;
+    }
+
+    /**
+     * [updateScheduleInfo description]
+     * @param  [type] $id       [description]
+     * @param  [type] $approval [description]
+     * @return [type]           [description]
+     */
+    public function updateScheduleInfo($id, $approval, $user_data)
+    {
+    	$approver = $user_data->first_name . ' ' . $user_data->last_name;
+    	$data = array(
+    		'status' => $approval,
+    		'approved_by' => $approver,
+    		'date_approved' => Carbon::now()
+    	);
+    	$result = DB::table('patient_info')
+    				->where('id',$id)
+    				->update($data);
+
+    	return $result;
     }
 }

@@ -154,5 +154,47 @@ requestScheduleFunctions = {
 		.done(function() {
 			$('#schedule-info-modal').modal();
 		});
-	}
+	},
+
+	/**
+	 * [updateSchedule description]
+	 * @param  {[type]} patien_info_id [description]
+	 * @param  {[type]} approval       [description]
+	 * @return {[type]}                [description]
+	 */
+	updateSchedule: function(patien_info_id, status, approval)
+	{
+		$.ajax({
+			headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    },
+			url: window.location.origin + '/update-schedule',
+			type: 'PUT',
+			data: {
+				id: patien_info_id,
+				approval: approval
+			},
+			success: function(response) {
+				var options = {
+					decline : 'danger',
+					pending : 'warning',
+					approved : 'success'
+				};
+				if(response == 1)
+				{
+					$('#schedule-info-modal #status').text('');
+					$('#schedule-info-modal #status').removeClass('text-' + options[status]).addClass('text-' + options[approval]).append(approval);
+
+					$('#alert-success').toggleClass('d-none');
+					$('#alert-success span#changed-status').empty().append(approval);
+
+					$('#close-btn').attr('onclick',location.reload());
+				}
+				else
+				{
+					$('#alert-danger').toggleClass('d-none');
+				}
+			}
+		});
+	},
 }

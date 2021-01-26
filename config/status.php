@@ -2,8 +2,8 @@
 
 return [
 	'bg' => [
-		'pending' => 'text-warning',
-		'approved' => 'text-success',
-		'declined' => 'text-danger'
+		'pending' => 'warning',
+		'approved' => 'success',
+		'decline' => 'danger'
 	]
 ];

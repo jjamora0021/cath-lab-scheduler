@@ -33,3 +33,4 @@ Route::get('/request-schedule', 'CalendarController@request')->name('request-sch
 Route::post('/create-request-schedule', 'CalendarController@createRequestSchedule')->name('create-request-schedule');
 Route::get('/check-schedule', 'CalendarController@checkSchedule')->name('check-schedule');
 Route::get('/fetch-schedule-info', 'CalendarController@fetchScheduleInfo')->name('check-schedule-info');
+Route::put('/update-schedule', 'CalendarController@updateScheduleInfo')->name('update-schedule');
