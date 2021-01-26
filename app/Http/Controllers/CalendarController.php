@@ -125,4 +125,17 @@ class CalendarController extends Controller
 
     	return $schedules;
     }
+
+    /**
+     * [fetchScheduleInfo description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function fetchScheduleInfo(Request $request)
+    {
+        $id = $request['id'];
+        $result = $this->PatientInformationModel->fetchScheduleInfo($id);
+        
+        return $result;
+    }
 }

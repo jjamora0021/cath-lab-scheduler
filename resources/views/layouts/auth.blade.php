@@ -8,7 +8,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Login</title>
+        <title>Cath Lab Scheduler</title>
 
         <!-- Fonts -->
         <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -16,6 +16,9 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-select.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
 
         <!-- Favicon -->
         <link href="{{ asset('img/logo/logo.png') }}" rel="icon" type="image/png">
@@ -26,7 +29,15 @@
 
         <!-- Scripts -->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+        <script src="{{ asset('js/moment.min.js') }}"></script>
         <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+
+        @yield('page-script')
     </body>
 </html>

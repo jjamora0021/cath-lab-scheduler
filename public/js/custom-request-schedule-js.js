@@ -75,4 +75,84 @@ requestScheduleFunctions = {
 			}
 		});
 	},
+
+	/**
+	 * [fetchSchedule description]
+	 * @param  {[type]} patien_info_id [description]
+	 * @return {[type]}                [description]
+	 */
+	fetchSchedule: function(patien_info_id)
+	{
+		$.ajax({
+			url: window.location.origin + '/fetch-schedule-info',
+			type: 'GET',
+			data: {
+				id: patien_info_id
+			},
+			success: function(response) {
+				var data = response[0];
+
+				var ptx_name = data.first_name + ' ' + data.middle_name + ' ' + data.last_name;
+				$('#schedule-info-modal #patient_name').text('');
+				$('#schedule-info-modal #patient_name').append(ptx_name);
+
+				var age = data.age;
+				$('#schedule-info-modal #age').text('');
+				$('#schedule-info-modal #age').append(age);
+
+				var pt_ptt = data.pt_ptt;
+				$('#schedule-info-modal #pt_ptt').text('');
+				$('#schedule-info-modal #pt_ptt').append(pt_ptt);
+
+				var weight = data.weight;
+				$('#schedule-info-modal #weight').text('');
+				$('#schedule-info-modal #weight').append(weight);
+
+				var height = data.height;
+				$('#schedule-info-modal #height').text('');
+				$('#schedule-info-modal #height').append(height);
+
+				$('#schedule-info-modal #allergies-list').text('');
+				$.each(JSON.parse(data.allergies), function(index, el) {
+					var list = '<li class="list-group-item">'+el+'</li>';
+					$('#schedule-info-modal #allergies-list').append(list);
+				});
+
+				var room_number = data.room_number;
+				$('#schedule-info-modal #room_number').text('');
+				$('#schedule-info-modal #room_number').append(room_number);
+
+				var bed_number = data.bed_number;
+				$('#schedule-info-modal #bed_number').text('');
+				$('#schedule-info-modal #bed_number').append(bed_number);
+				
+				var diagnosis = data.diagnosis;
+				$('#schedule-info-modal #diagnosis').text('');
+				$('#schedule-info-modal #diagnosis').append(diagnosis);
+				
+				var operation = data.operation;
+				$('#schedule-info-modal #operation').text('');
+				$('#schedule-info-modal #operation').append(operation);
+
+				var surgeon = data.surgeon;
+				$('#schedule-info-modal #surgeon').text('');
+				$('#schedule-info-modal #surgeon').append(surgeon);
+
+				var anesthesiologist = data.anesthesiologist;
+				$('#schedule-info-modal #anesthesiologist').text('');
+				$('#schedule-info-modal #anesthesiologist').append(anesthesiologist);
+
+				var urgency = data.urgency;
+				$('#schedule-info-modal #urgency').text('');
+				$('#schedule-info-modal #urgency').append(urgency);
+
+				var status = data.status;
+				$('#schedule-info-modal #status').text('');
+				$('#schedule-info-modal #status').append(status);
+			}
+		})
+		.done(function() {
+			$('#schedule-info-modal').modal();
+		});
+	}
 }

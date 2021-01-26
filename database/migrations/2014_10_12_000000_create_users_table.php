@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->string('username');
             $table->string('email');
             $table->enum('user_role', ['superadmin', 'doctor', 'staff', 'manager']);
             $table->enum('status', ['active', 'inactive', 'blocked']);

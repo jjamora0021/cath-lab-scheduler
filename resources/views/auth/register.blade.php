@@ -28,7 +28,11 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required autofocus>
+                                        <input type="text" class="form-control form-control-user" name="first_name" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required autofocus>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="middle_name" placeholder="{{ __('Middle Name') }}" value="{{ old('middle_name') }}" autofocus>
                                     </div>
 
                                     <div class="form-group">
@@ -37,6 +41,16 @@
 
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" name="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="btn-group form-control-user" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-primary btn-user" id="user_role_superadmin" onclick="setUserRole('superadmin');">Super Admin</button>
+                                            <button type="button" class="btn btn-primary btn-user" id="user_role_manager" onclick="setUserRole('manager');">Manager</button>
+                                            <button type="button" class="btn btn-primary btn-user" id="user_role_doctor" onclick="setUserRole('doctor');">Doctor</button>
+                                            <button type="button" class="btn btn-primary btn-user" id="user_role_staff" onclick="setUserRole('staff');">Staff</button>
+                                        </div>
+                                        <input type="hidden" id="user_role" name="user_role" value="">
                                     </div>
 
                                     <div class="form-group">
@@ -69,4 +83,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-script')
+    <script type="text/javascript">
+        function setUserRole(user_role)
+        {
+            $('#user_role').val(user_role);
+            $('#user_role_' + user_role).toggleClass('active');
+        }
+    </script>
 @endsection

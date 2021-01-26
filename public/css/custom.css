@@ -3,3 +3,8 @@
     vertical-align: middle;
     border-top: 1px solid #e6edf4;
 }
+
+ul#allergies-list li {
+	font-size: 20px;
+    font-weight: 600;
+}

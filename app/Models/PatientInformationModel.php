@@ -49,4 +49,16 @@ class PatientInformationModel extends Model
 
     	return $schedules;
     }
+
+    /**
+     * [fetchScheduleInfo description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function fetchScheduleInfo($id)
+    {
+    	$data = (DB::table('patient_info')->where('id',$id)->get())->toArray();
+    	
+    	return $data;
+    }
 }

@@ -7,7 +7,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
+    <h1 class="h4 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
 
     @if (session('success'))
     <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -61,7 +61,7 @@
                                             <td>King Luna</td>
                                             <td>{{ \Carbon\Carbon::parse($value->date)->format('F d,Y') }}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Review</button>
+                                                <button class="btn btn-primary" onclick="requestScheduleFunctions.fetchSchedule({{ $value->id }});">Review</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -75,7 +75,7 @@
     </div>
 
     {{-- Modal --}}
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="schedule-info-modal">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -85,54 +85,91 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Patient Name: <h3 id="patient_name" class="mt-2"></h3></label>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Patient Name: <h4 id="patient_name" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Age: <h4 id="age" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">PT / PTT: <h4 id="pt_ptt" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Weight in kg: <h4 id="weight" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Height: <h4 id="height" class="mt-2"></h4></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Age: <h3 id="age" class="mt-2"></h3></label>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-8 offset-lg-2">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Allergies: </label>
+                                    <ul class="list-group" id="allergies-list">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="form-group focused">
-                                <label class="form-control-label">PT / PTT: <h3 id="pt_ptt" class="mt-2"></h3></label>
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Room #: <h4 id="room_number" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Bed #: <h4 id="bed_number" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Diagnosis: <h4 id="diagnosis" class="mt-2"></h4></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Weight: <h3 id="weight" class="mt-2">145</h3></label>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Operation: <h4 id="operation" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Surgeon: <h4 id="surgeon" class="mt-2"></h4></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group focused">
+                                    <label class="form-control-label">Anesthesiologist: <h4 id="anesthesiologist" class="mt-2"></h4></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Height: <h3 id="height" class="mt-2"></h3></label>
+                        
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label text-capitalize">Urgency: <h4 id="urgency" class="mt-2"></h4></label>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Allergies: </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Diagnosis: <h3 id="diagnosis" class="mt-2"></h3></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Room #: <h3 id="room_number" class="mt-2">123</h3></label>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group focused">
-                                <label class="form-control-label">Bed #: <h3 id="bed_number" class="mt-2"></h3></label>
+                            <div class="col-lg-3">
+                                <div class="form-group focused">
+                                    <label class="form-control-label text-capitalize">Status: <h4 id="status" class="mt-2 text-warning"></h4></label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,6 +185,7 @@
 @endsection
 
 @section('page-script')
+    <script type="text/javascript" src="{{ asset('js/custom-request-schedule-js.js') }}"></script>
     <script type="text/javascript">
         $('table').DataTable();
     </script>
