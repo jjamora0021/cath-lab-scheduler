@@ -138,10 +138,17 @@ requestScheduleFunctions = {
 				$('#schedule-info-modal #status').empty().append(status);
 
 				var date = data.date.split('-');
-				$('#schedule-info-modal #date').empty().val(date[1]+"/"+date[2]+"/"+date[0]).datetimepicker();
+				var dateToday = new Date();
+				var rangemaxdate = new Date(dateToday.getFullYear(), dateToday.getMonth(),dateToday.getDate() + 31);
+				$('#schedule-info-modal #date').empty().val(date[1]+"/"+date[2]+"/"+date[0]).datetimepicker({ 
+					minDate: dateToday,
+					maxDate: rangemaxdate
+				});
 
 				var time = data.time;
-				$('#schedule-info-modal #time').empty().val(time).datetimepicker({format: 'LT'});
+				$('#schedule-info-modal #time').empty().val(time).datetimepicker({
+					format: 'LT'
+				});
 
 				$('#btn-approve').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "approved")');
 				$('#btn-decline').attr('onclick',  'requestScheduleFunctions.updateSchedule('+ data.id +', "decline")')

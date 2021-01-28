@@ -127,6 +127,51 @@ class CalendarController extends Controller
     }
 
     /**
+     * [fetchcheduleForCalendar description]
+     * @return [type] [description]
+     */
+    public function fetchcheduleForCalendar()
+    {
+        $data = $this->PatientInformationModel->fetchSchedule();
+        $schedules = array();
+        foreach ($data as $key => $value) {
+            $schedules[$key]['title'] = $value->operation . ' - ' . $value->first_name . ' ' . $value->middle_name . ' ' . $value->last_name;
+            $schedules[$key]['start'] = $value->date . 'T' . $value->time;
+        }
+        
+        $holidays = $this->fetchHolidays();
+        $schedules = array_merge($schedules,$holidays);
+
+        return json_encode($schedules);
+    }
+
+    /**
+     * [fetchHolidays description]
+     * @return [type] [description]
+     */
+    public function fetchHolidays()
+    {
+        $google_api_key = 'AIzaSyBJNl1Z2Xz2kx4vl_Kyvo2tkpCF0Ci45KU';
+        $json = file_get_contents('https://www.googleapis.com/calendar/v3/calendars/en.philippines%23holiday%40group.v.calendar.google.com/events?key='.$google_api_key);
+        $json_decode = json_decode($json, true)['items'];
+        
+
+        $holidays = array();
+        foreach ($json_decode as $key => $value) {
+            $data_date = explode('-', $value['start']['date'])[0];
+            if($data_date == date('Y'))
+            {
+                $holidays[$key]['title'] = $value['summary'];
+                $holidays[$key]['date'] = $value['start']['date'];
+                $holidays[$key]['display'] = 'background';
+                $holidays[$key]['color'] = '#ff9f89';
+            }
+        }
+
+        return $holidays;
+    }
+
+    /**
      * [fetchScheduleInfo description]
      * @param  Request $request [description]
      * @return [type]           [description]

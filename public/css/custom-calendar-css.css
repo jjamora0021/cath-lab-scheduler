@@ -9,3 +9,17 @@
 .fc-listMonth-button {
 	text-transform: uppercase !important;
 }
+
+.fc-daygrid-bg-harness .fc-event-title {
+	font-size: 1.2em !important;
+    color: #000 !important;
+    font-weight: 800 !important;
+    margin: 1.5em !important;
+}
+
+.fc-daygrid-event .fc-event-title {
+	font-size: 1.2em !important;
+    color: #000 !important;
+    font-weight: 800 !important;
+    margin: .5em !important;
+}

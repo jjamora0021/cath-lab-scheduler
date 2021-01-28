@@ -46,7 +46,11 @@ class PatientInformationModel extends Model
      */
     public function fetchSchedule()
     {
-    	$schedules = (DB::table('patient_info')->get())->toArray();
+    	$schedules = (DB::table('patient_info')
+                        ->orderBy('date','DESC')
+                        ->orderBy('time','DESC')
+                        ->get())
+                    ->toArray();
 
     	return $schedules;
     }

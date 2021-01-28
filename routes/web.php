@@ -32,5 +32,7 @@ Route::get('/calendar', 'CalendarController@index')->name('calendar');
 Route::get('/request-schedule', 'CalendarController@request')->name('request-schedule');
 Route::post('/create-request-schedule', 'CalendarController@createRequestSchedule')->name('create-request-schedule');
 Route::get('/check-schedule', 'CalendarController@checkSchedule')->name('check-schedule');
+Route::get('/fetch-holidays', 'CalendarController@fetchHolidays')->name('fetch-holidays');
+Route::get('/fetch-schedule', 'CalendarController@fetchcheduleForCalendar')->name('fetch-schedule');
 Route::get('/fetch-schedule-info', 'CalendarController@fetchScheduleInfo')->name('check-schedule-info');
 Route::put('/update-schedule', 'CalendarController@updateScheduleInfo')->name('update-schedule');
