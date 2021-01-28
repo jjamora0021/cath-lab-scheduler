@@ -41,10 +41,24 @@ class PatientInformationModel extends Model
     }
 
     /**
-     * [fetchSchedule description]
+     * [fetchScheduleForCalendar description]
      * @return [type] [description]
      */
     public function fetchSchedule()
+    {
+        $schedules = (DB::table('patient_info')
+                        ->orderBy('updated_at','DESC')
+                        ->get())
+                    ->toArray();
+
+        return $schedules;
+    }
+
+    /**
+     * [fetchScheduleForCalendar description]
+     * @return [type] [description]
+     */
+    public function fetchScheduleForCalendar()
     {
     	$schedules = (DB::table('patient_info')
                         ->orderBy('date','DESC')
@@ -81,7 +95,8 @@ class PatientInformationModel extends Model
     		'approved_by' => $approver,
     		'date_approved' => Carbon::now(),
     		'date' => $date,
-    		'time' => $time
+    		'time' => $time,
+            'updated_at' => Carbon::now()
     	);
     	$result = DB::table('patient_info')
     				->where('id',$id)

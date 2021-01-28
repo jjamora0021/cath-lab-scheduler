@@ -132,11 +132,14 @@ class CalendarController extends Controller
      */
     public function fetchcheduleForCalendar()
     {
-        $data = $this->PatientInformationModel->fetchSchedule();
+        $data = $this->PatientInformationModel->fetchScheduleForCalendar();
         $schedules = array();
         foreach ($data as $key => $value) {
-            $schedules[$key]['title'] = $value->operation . ' - ' . $value->first_name . ' ' . $value->middle_name . ' ' . $value->last_name;
-            $schedules[$key]['start'] = $value->date . 'T' . $value->time;
+            if($value->status === 'approved')
+            {
+                $schedules[$key]['title'] = $value->operation . ' - ' . $value->first_name . ' ' . $value->middle_name . ' ' . $value->last_name;
+                $schedules[$key]['start'] = $value->date . 'T' . $value->time;
+            }
         }
         
         $holidays = $this->fetchHolidays();

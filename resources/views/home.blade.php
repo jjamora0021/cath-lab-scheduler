@@ -44,6 +44,7 @@
                                 <th>Status</th>
                                 <th>Approved By</th>
                                 <th>Date | Time Approved</th>
+                                <th hidden>Updated At</th>
                                 <th></th>
                             </thead>
                             @if(empty($schedules))
@@ -60,6 +61,7 @@
                                             <td class="text-capitalize">{{ $value->status }}</td>
                                             <td>{{ $value->approved_by != NULL ? $value->approved_by : '' }}</td>
                                             <td>{{ $value->date_approved }}</td>
+                                            <td hidden>{{ $value->updated_at }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-primary" onclick="requestScheduleFunctions.fetchSchedule({{ $value->id }});">Review</button>
                                             </td>
@@ -216,7 +218,9 @@
     <script type="text/javascript" src="{{ asset('js/custom-date-time-picker-js.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function($) {
-            $('table').DataTable();
+            $('table').DataTable({
+                "order": [[ 8, "desc" ]]
+            });
             dateTimePickerFunctions.onLoad();
             $('.selectpicker').selectpicker();
             $('#time').datetimepicker().on("dp.change",function() {
