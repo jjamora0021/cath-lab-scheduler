@@ -23,3 +23,8 @@
     font-weight: 800 !important;
     margin: .5em !important;
 }
+
+.fc-daygrid-day.fc-day.fc-day-sun,
+.fc-daygrid-day.fc-day.fc-day-sat {
+	background: #4a556840;
+}

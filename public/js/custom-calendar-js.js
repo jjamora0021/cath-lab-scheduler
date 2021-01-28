@@ -12,6 +12,7 @@ schedulesFunctions = {
 		var calendarEl = document.getElementById('calendar');
 		var dateToday = new Date().toISOString().slice(0,10);
 		var calendar = new FullCalendar.Calendar(calendarEl, {
+			themeSystem: 'bootstrap',
 			initialView: 'dayGridMonth',
 			headerToolbar: {
 				left: 'prev,next today',
