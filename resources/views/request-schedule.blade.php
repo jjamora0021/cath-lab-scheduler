@@ -10,7 +10,7 @@
 
     <div class="row">
 
-        <div class="col-lg-8 offset-lg-2">
+        <div class="col-md-10 offset-md-1">
             @if ($message = Session::get('success'))
                 <div class="alert alert-success alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>    
